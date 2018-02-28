@@ -1,5 +1,11 @@
 package com.imooc.dto;
 
+/**
+ * @ApiModel：用在模型类上，对模型类做注释；
+ *  @ApiModelProperty：用在属性上，对属性做注释
+ */
+
+
 public class User {
 
     private String username;
