@@ -32,11 +32,44 @@ public class UserControllerTest {
 
     @Test
     public void whenQuerySuccess() throws Exception{
-        mockMvc.perform(MockMvcRequestBuilders.get("/user")
+
+        String result = mockMvc.perform(MockMvcRequestBuilders.get("/user")
                  .param("username","jojo")
+                 .param("age","18")
+                 .param("ageTo","60")
+                 .param("xxx","yyy")
                  .contentType(MediaType.APPLICATION_JSON_UTF8))
                  .andExpect(MockMvcResultMatchers.status().isOk()) ////期望返回状态码是isOk(), 就是200
-                 .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(3));//返回结果是集合，元素的数量是3
+                 .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(3))//返回结果是集合，元素的数量是3
+                 .andReturn().getResponse().getContentAsString();
+        System.out.println(result);
+    }
+
+    /**
+     * 查询id为1 的user信息
+     * @throws Exception
+     */
+    @Test
+    public void whenGetInfoSuccess() throws Exception{
+        String result = mockMvc.perform(MockMvcRequestBuilders.get("/user/1")
+                                       .contentType(MediaType.APPLICATION_JSON_UTF8))
+                                        .andExpect(MockMvcResultMatchers.status().isOk())
+                                        .andReturn().getResponse().getContentAsString();
+        System.out.println(result);
+
+    }
+
+    /**
+     * 查询id 非数字
+     * @throws Exception
+     */
+    @Test
+    public void whenGetInfoFail() throws Exception {
+          mockMvc.perform(MockMvcRequestBuilders.get("/user/a")
+                           .contentType(MediaType.APPLICATION_JSON_UTF8))
+                           .andExpect(MockMvcResultMatchers.status().is4xxClientError());
+
+
     }
 
 
