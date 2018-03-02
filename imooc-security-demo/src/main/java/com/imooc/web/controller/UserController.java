@@ -7,7 +7,10 @@ import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,6 +57,44 @@ public class UserController {
         User user = new User();
         user.setUsername("tom");
         return user;
+    }
+
+
+    @PostMapping
+    public User create(@Valid @RequestBody User user , BindingResult errors){
+
+       /* if (errors.hasErrors()){
+             throw new ControllerExceptionHandler();
+        }*/
+
+
+        System.out.println(user.getId());
+        System.out.println(user.getUsername());
+        System.out.println(user.getPassword());
+        System.out.println(user.getBirthday());
+
+        user.setId("1");
+        return user;
+
+    }
+
+
+    @PutMapping("/{id:\\d+}")
+    public User update(@Valid @RequestBody User user,BindingResult errors){
+
+        System.out.println(user.getId());
+        System.out.println(user.getUsername());
+        System.out.println(user.getPassword());
+        System.out.println(user.getBirthday());
+
+        user.setId("1");
+        return user;
+    }
+
+
+    @DeleteMapping("/{id:\\d+}")
+    public void delete(@PathVariable String id){
+        System.out.println(id);
     }
 
 
