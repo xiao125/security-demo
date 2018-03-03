@@ -3,6 +3,7 @@ package com.imooc.web.controller;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.imooc.dto.User;
 import com.imooc.dto.UserQueryCondition;
+import com.imooc.exception.UserNotExistException;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.springframework.data.domain.Pageable;
@@ -63,9 +64,10 @@ public class UserController {
     @PostMapping
     public User create(@Valid @RequestBody User user , BindingResult errors){
 
-       /* if (errors.hasErrors()){
-             throw new ControllerExceptionHandler();
-        }*/
+        //异常
+       if (errors.hasErrors()) {
+           throw new UserNotExistException(user.getId());
+       }
 
 
         System.out.println(user.getId());
